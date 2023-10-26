@@ -3,11 +3,11 @@ struct movie
 { 
     char code[10]; 
     char title[26]; 
-    int year; 
+    int* year; 
 }; 
 int count=0;
 int max_movies=100;
-void insert(char code[], char title[], int year) 
+void insert(char code[], char title[], int* year) 
 { 
     // Inserting a movie at the database of the store 
     
@@ -28,7 +28,7 @@ void erase(char code)
     // Erasing the movie by entering its code 
 } 
  
-void print(char code, char title, int year) 
+void print(char code, char title, int* year) 
 { 
     // Printing all the information that are located at the store's database 
 } 
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     struct movie newMovie; 
      printf("\nEnter your choice:"); 
     // The user is asked to select a function 
-    scanf("%c", &choice); 
+    scanf("%C", &choice); 
     // All the letters at the case command, are the first letters of each function. 
     switch (choice){ 
     case 'i': 
@@ -70,14 +70,14 @@ int main(int argc, char *argv[])
     case 'S': 
         printf("Enter movie code: "); 
         scanf("%s",newMovie.code); 
-        // here you should call the  function 
+        search(newMovie.code);
         break; 
  
     case 'u': 
     case 'U': 
         printf("Enter movie code: "); 
         scanf("%s",newMovie.code); 
-        // here you should call the  function 
+        update(newMovie.code);
  
         break; 
  
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     case 'E': 
          printf("Enter movie code: "); 
          scanf("%s",newMovie.code); 
-        // here you should call the  function 
+        erase(newMovie.code);
  
         break; 
  
@@ -97,24 +97,15 @@ int main(int argc, char *argv[])
         scanf("%s",newMovie.title); 
         printf("Enter year of movie: "); 
         scanf("%d",&newMovie.year); 
-        // here you should call the function 
-        // ** 
+    print(newMovie.code, newMovie.title, newMovie.year);
         break; 
  
     case 'q': 
     case 'Q': 
-      
-        printf("Enter movie code: "); 
-        scanf("%s",newMovie.code); 
-        printf("Enter movie title: ");
-        scanf("%s",newMovie.title);
-        printf("Enter year of movie: ");
-        scanf("%d",&newMovie.year);
-        // here you should call the function 
+      quit();
         break; 
  
     default: 
-        printf("The function you have selected doesn't exist."); 
-        // default statements 
+        printf("The function you have selected doesn't exist.");
     } 
 }
