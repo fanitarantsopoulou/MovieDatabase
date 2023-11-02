@@ -1,56 +1,129 @@
 #include <stdio.h>
-struct movie
+
+struct Movie
 {
     int code;
     char title[25];
     int year;
 };
 
-#define NAX_MOVIES 100;
-struct movie movies[MAX_MOVIES];
-int nmMovies=0;
+int counter = 0; // Counter represents the number of movies
 
-void insert()
+struct Movie movies[100];
+
+void insert(int x) // Inserting a movie in the database
 {
-    // Inserting a movie at the database of the store
-    struct movie newMovie;
-    for (int i=0;i<=max_movies;i++){
-        if (newMovie.code==.code){
-            printf("The movie doesn't exist in the database.\n");
+    int temp; // Using a temporary variable which represents a movie code
+
+    if (counter == 100)
+    {
+        printf("Database is full!\n");
+        return;
+    }
+
+    printf("Insert Movie title: ");
+    scanf(" %s", &movies[x].title);
+    printf("Insert Movie code: ");
+    scanf(" %d", &temp);
+    for (int i = 0; i <= 100; ++i)
+    {
+
+        if (movies[i].code == temp)
+        {
+            printf("The movie already exists!\n");
+            return;
+        }
+        movies[x].code = temp;
+    }
+    printf("Insert Movie year: ");
+    scanf(" %d", &movies[x].year);
+}
+
+void search() // Searching if a movie exists in the database
+{
+    int code;
+    printf("Enter movie code to search: ");
+    scanf("%d", &code);
+
+    for (int i = 0; i <= 100; i++)
+    {
+        if (movies[i].code == code)
+        {
+            printf("Movie found:\n");
+            printf("Title: %s\n", movies[i].title);
+            printf("Year: %d\n", movies[i].year);
+            return;
+        }
+    }
+
+    printf("Movie not found.\n");
+}
+
+void update() // Updating the moving by its code
+{
+    int code;
+    printf("Enter movie code to update: ");
+    scanf(" %d", &code);
+
+    for (int i = 0; i <= 100; i++)
+    {
+
+        if (movies[i].code == code)
+        {
+            printf("Enter new year: ");
+            scanf(" %d", &movies[i].year);
+            printf("Year updated.\n");
+
+            return;
+        }
+    }
+    printf("Movie not found.\n");
+}
+
+void erase() //Erasing a movie from the database
+{
+    int code;
+    printf("Enter movie code to erase: ");
+    scanf(" %d", &code);
+
+    for (int i = 0; i <= 100; i++)
+    {
+
+        if (movies[i].code == code)
+        {
+            printf("Enter code for erase: ");
+            scanf(" %d", &movies[i].code);
+            movies[i].code = 0;
+            movies[i].year = 0;
+
+            return;
+        }
+    }
+    printf("Movie not found.\n");
+}
+
+void print() // Printing all the information which are located in the database
+{
+    printf("The movies are: \n");
+    for (int i = 0; i <= 100; i++)
+    {
+        if (movies[i].year >= 1) // Movie year must be over 0, because there were no movies made in the year 0
+        {
+            printf("Title: %s, Year: %d, Code:%d\n", movies[i].title, movies[i].year, movies[i].code);
         }
     }
 }
 
-void search(int code)
+void quit(int *x) // Quiting the program
 {
-    // Searching if the movide exists by entering its code
+    *x = *x + 1;
 }
 
-void update(int code)
+int a = 1;
+
+int main()
 {
-    // Updating the year the movie was filmed by entering its code
-}
 
-void erase(int code)
-{
-    // Erasing the movie by entering its code
-    printf("Enter the movie code\n");
-
-}
-
-void print(int code, char *title[25], int *year)
-{
-    // Printing all the information that are located at the store's database
-}
-
-void quit()
-{
-    // Quitting the program
-
-}
-
-int main(int argc, char *argv[])
-{
     printf("Welcome to movies adminstration system\n");
     printf("\ni for insert\n");
     printf("\ns for search\n");
@@ -59,65 +132,45 @@ int main(int argc, char *argv[])
     printf("\np for print\n");
     printf("\nq for quit\n");
 
-    char choice;
-    struct movie newMovie;
-    printf("\nEnter your choice:");
-    // The user is asked to select a function
-    scanf("%C", &choice);
-    // All the letters at the case command, are the first letters of each function.
-    switch (choice)
+    while (a == 1)
     {
-    case 'i':
-    case 'I':
-        printf("Enter movie code: ");
-        scanf("%d", newMovie.code);
-        printf("Enter movie title: ");
-        scanf("%s", newMovie.title);
-        printf("Enter year of movie: ");
-        scanf("%d", &newMovie.year);
-        insert(newMovie.code, newMovie.title, newMovie.year);
-        break;
+        char choice;
+        scanf(" %c", &choice);
+        switch (choice)
+        {
 
-    case 's':
-    case 'S':
-        printf("Enter movie code: ");
-        scanf("%d", newMovie.code);
-        search(newMovie.code);
-        break;
+        case 'q':
+            quit(&a);
+            break;
 
-    case 'u':
-    case 'U':
-        printf("Enter movie code: ");
-        scanf("%d", newMovie.code);
-        update(newMovie.code);
+        case 'i':
+            insert(counter);
+            counter = counter + 1;
+            break;
 
-        break;
+        case 's':
+            search();
+            break;
 
-    case 'e':
-    case 'E':
-        printf("Enter movie code: ");
-        scanf("%d", newMovie.code);
-        erase(newMovie.code);
+        case 'u':
+            update();
+            break;
 
-        break;
+        case 'e':
+            erase();
+            break;
 
-    case 'p':
-    case 'P':
-        printf("Enter movie code: ");
-        scanf("%d", newMovie.code);
-        printf("Enter movie title: ");
-        scanf("%s", newMovie.title);
-        printf("Enter year of movie: ");
-        scanf("%d", &newMovie.year);
-        print(newMovie.code, newMovie.title, newMovie.year);
-        break;
-
-    case 'q':
-    case 'Q':
-        quit();
-        break;
-    default:
-        printf("The function you have selected doesn't exist.");
-        // default statements
+        case 'p':
+            print();
+            break;
+        }
+        printf("\ni for insert\n");
+        printf("\ns for search\n");
+        printf("\nu for update\n");
+        printf("\ne for erase\n");
+        printf("\np for print\n");
+        printf("\nq for quit\n");
     }
+
+    return 0;
 }
