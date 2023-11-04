@@ -22,7 +22,7 @@ void insert(int x) // Inserting a movie in the database
     }
 
     printf("Insert Movie title: ");
-    scanf(" %s", &movies[x].title);
+    scanf(" %24s", &movies[x].title);
     printf("Insert Movie code: ");
     scanf(" %d", &temp);
     for (int i = 0; i <= 100; ++i)
@@ -49,7 +49,7 @@ void search() // Searching if a movie exists in the database
     {
         if (movies[i].code == code)
         {
-            printf("Movie found:\n");
+            printf("Movie found:\n"); //Printing the movie elements
             printf("Title: %s\n", movies[i].title);
             printf("Year: %d\n", movies[i].year);
             return;
@@ -59,7 +59,7 @@ void search() // Searching if a movie exists in the database
     printf("Movie not found.\n");
 }
 
-void update() // Updating the moving by its code
+void update() // Updating the movie year by its code
 {
     int code;
     printf("Enter movie code to update: ");
@@ -93,7 +93,7 @@ void erase() //Erasing a movie from the database
         {
             printf("Enter code for erase: ");
             scanf(" %d", &movies[i].code);
-            movies[i].code = 0;
+            movies[i].code = 0; //Movie code and year equals to 0, means that the movie has deleted.
             movies[i].year = 0;
 
             return;
@@ -124,7 +124,8 @@ int a = 1;
 int main()
 {
 
-    printf("Welcome to movies adminstration system\n");
+    printf("Welcome to movies administration system\n");
+    printf("Enter operation code:\n ");
     printf("\ni for insert\n");
     printf("\ns for search\n");
     printf("\nu for update\n");
@@ -134,42 +135,42 @@ int main()
 
     while (a == 1)
     {
-        char choice;
-        scanf(" %c", &choice);
-        switch (choice)
+        char operation;
+        scanf(" %c", &operation);
+        switch (operation)
         {
+            case 'i': //I or i for inserting a movie
+            case 'I':
+                insert(counter);
+                counter = counter + 1;
+                break;
 
-        case 'q':
-            quit(&a);
-            break;
+            case 's': //S or s for searching a movie
+            case 'S':
+                search();
+                break;
 
-        case 'i':
-            insert(counter);
-            counter = counter + 1;
-            break;
+            case 'u': //U or u for updating a movie
+            case 'U':
+                update();
+                break;
 
-        case 's':
-            search();
-            break;
+            case 'e': //E or e for erasing a movie
+            case 'E':
+                erase();
+                break;
 
-        case 'u':
-            update();
-            break;
-
-        case 'e':
-            erase();
-            break;
-
-        case 'p':
-            print();
-            break;
+            case 'p': //P or p for printing the database elements
+            case 'P':
+                print();
+                break;
+            
+            case 'q': //Q or q for quitting the program
+            case 'Q':
+                quit(&a);
+                break;
         }
-        printf("\ni for insert\n");
-        printf("\ns for search\n");
-        printf("\nu for update\n");
-        printf("\ne for erase\n");
-        printf("\np for print\n");
-        printf("\nq for quit\n");
+        printf("Enter your choice:\n "); // Choosing one of the previous operations
     }
 
     return 0;
